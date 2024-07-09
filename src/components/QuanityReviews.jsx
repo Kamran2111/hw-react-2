@@ -1,49 +1,48 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class QuanityReviews extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+const QuantityReviews = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const countGoodReviews = () => {
+    setGood(good + 1);
   };
 
-  countGoodReviews = () => {
-    this.setState({ good: this.state.good + 1 });
+  const countNeutralReviews = () => {
+    setNeutral(neutral + 1);
   };
 
-  countNeutralReviews = () => {
-    this.setState({ neutral: this.state.neutral + 1 });
+  const countBadReviews = () => {
+    setBad(bad + 1);
   };
 
-  countBadReviews = () => {
-    this.setState({ bad: this.state.bad + 1 });
-  };
-  countTotalFeedback = () => {
-    return this.state.good + this.state.neutral + this.state.bad;
-  };
-  countPositiveFeedbackPercentage = () => {
-    const total = this.countTotalFeedback();
-    return total > 0 ? Math.round((this.state.good / total) * 100) : 0;
+  const countTotalFeedback = () => {
+    return good + neutral + bad;
   };
 
-  render() {
-    const positivePercentage = this.countPositiveFeedbackPercentage();
-    return (
-      <>
-        <h3>Please leave feedback</h3>
-        <button onClick={this.countGoodReviews}>Good</button>
-        <button onClick={this.countNeutralReviews}>Neutral</button>
-        <button onClick={this.countBadReviews}>Bad</button>
-        <div>
-          <h3>Statistics</h3>
-          <p>Good: {this.state.good}</p>
-          <p>Neutral: {this.state.neutral}</p>
-          <p>Bad: {this.state.bad}</p>
-          <p>Positive feedback: {positivePercentage}%</p>
-        </div>
-      </>
-    );
-  }
-}
+  const countPositiveFeedbackPercentage = () => {
+    const total = countTotalFeedback();
+    return total > 0 ? Math.round((good / total) * 100) : 0;
+  };
 
-export default QuanityReviews;
+  const positivePercentage = countPositiveFeedbackPercentage();
+
+  return (
+    <>
+      <h3>Please leave feedback</h3>
+      <button onClick={countGoodReviews}>Good</button>
+      <button onClick={countNeutralReviews}>Neutral</button>
+      <button onClick={countBadReviews}>Bad</button>
+      <div>
+        <h3>Statistics</h3>
+        <p>Good: {good}</p>
+        <p>Neutral: {neutral}</p>
+        <p>Bad: {bad}</p>
+        <p>Positive feedback: {positivePercentage}%</p>
+      </div>
+    </>
+  );
+};
+
+export default QuantityReviews;
